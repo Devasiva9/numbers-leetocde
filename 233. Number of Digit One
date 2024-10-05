@@ -1,0 +1,36 @@
+Given an integer n, count the total number of digit 1 appearing in all non-negative integers less than or equal to n.
+
+ 
+
+Example 1:
+
+Input: n = 13
+Output: 6
+Example 2:
+
+Input: n = 0
+Output: 0
+
+for 1 (count += 1 means count = 1)
+for 10 (count += 1 means count = 2)
+now for 11 here ( count += 2 means count = 4)
+then for 12 (count += 1 means count = 5)
+and for 13 (count += 1 means count = 6)
+
+so the output = 6
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution {
+  public int countDigitOne(int n) {
+    int ans = 0;
+    for (long pow10 = 1; pow10 <= n; pow10 *= 10) {
+      final long divisor = pow10 * 10;
+      final int quotient = (int) (n / divisor);
+      final int remainder = (int) (n % divisor);
+      if (quotient > 0)
+        ans += quotient * pow10;
+      if (remainder >= pow10)
+        ans += Math.min(remainder - pow10 + 1, pow10);
+    }
+    return ans;
+  }
+}
